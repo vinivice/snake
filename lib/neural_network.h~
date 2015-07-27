@@ -1,0 +1,55 @@
+#ifndef NEURAL_NETWORK_H
+#define NEURAL_NETWORK_H
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include <fstream>
+
+typedef std::vector<float> Neuron;
+typedef std::vector<Neuron> Layer;
+typedef std::vector<Layer> Neural_network;
+
+class Individual{
+        public:
+            Neural_network genome;
+            int fitness;
+            static int max_fitness;
+            
+            Individual():fitness(1){};
+            Individual(Neural_network g):genome(g), fitness(1){};
+};
+
+bool sort_idv_fitness(const Individual &lhs, const Individual &rhs);
+
+typedef std::vector<Individual> Population;
+
+void cross_over(const Individual *dad, const Individual *mom, Individual *child1, Individual *child2);
+
+void mutation(Individual *idv);
+
+void rand_individual(Individual *idv, const int input_size);
+
+void print_genome(Individual *idv);
+
+void generation_0(Population *pop, int input_size);
+
+void next_generation(Population *pop, int input_size);
+
+float calc_input(std::vector<float> c, int dir, Neuron n);
+
+float sigmoid_function(std::vector<float> c, int dir, Neuron n);
+
+void save_genome(std::string file_name, Individual *idv);
+
+void load_genome(std::string file_name, Individual *idv);
+
+void save_population(std::string pop_name, Population *pop);
+
+void load_population(std::string pop_name, Population *pop);
+
+#endif
